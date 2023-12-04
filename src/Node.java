@@ -8,11 +8,11 @@ public class Node {
     private Object occupant;
     private ImageIcon icon;
 
-    public Node (boolean isInBounds, Object occupant, String icon){
+    public Node (boolean isInBounds, Object occupant, ImageIcon icon){
         frictionCoef = 1;
         this.isInBounds = isInBounds;
         this.occupant = occupant;
-        this.icon = new ImageIcon (icon);
+        this.icon = icon;
     }
 
     public int getFrictionCoef() {
