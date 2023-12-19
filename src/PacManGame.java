@@ -43,57 +43,47 @@ public class PacManGame {
                     Image image = imageIcon.getImage(); // transform it
                     Image newImg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newImg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
-                    list.add(new Wall(imageIcon));
-                    map[i][n] = new Node(false, list , false);
+                    map[i][n] = new Node(false, new Wall (imageIcon) , false);
                 }
                 else if (i==14 && n== 13){
                     ImageIcon imageIcon = new ImageIcon("pics/blinky sprite.png"); // load the image to a imageIcon
                     Image image = imageIcon.getImage(); // transform it
                     Image newImg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newImg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
                     blinky = new Ghost("blinky", imageIcon);
                     blinky.setDirection("l");
                     blinky.setCurrLocation(new Coordinate(i,n));
-                    list.add(blinky);
-                    map[i][n] = new Node(true, list, true);
+                    map[i][n] = new Node(true, blinky, true);
                 }
                 else if (i==17 && n== 12){
                     ImageIcon imageIcon = new ImageIcon("pics/clyde sprite.png"); // load the image to a imageIcon
                     Image image = imageIcon.getImage(); // transform it
                     Image newImg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newImg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
                     clyde = new Ghost("clyde", imageIcon);
                     clyde.setDirection("r");
                     clyde.setCurrLocation(new Coordinate(i,n));
-                    list.add(clyde);
-                    map[i][n] = new Node(true, list, true);
+                    map[i][n] = new Node(true, clyde, true);
                 }
                 else if (i==17 && n== 13){
                     ImageIcon imageIcon = new ImageIcon("pics/pinky sprite.png"); // load the image to a imageIcon
                     Image image = imageIcon.getImage(); // transform it
                     Image newimg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newimg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
                     pinky = new Ghost("pinky", imageIcon);
                     pinky.setDirection("u");
                     pinky.setCurrLocation(new Coordinate(i,n));
-                    list.add(pinky);
-                    map[i][n] = new Node(true, list, true);
+                    map[i][n] = new Node(true, pinky, true);
                 }
                 else if (i==17 && n== 14){
                     ImageIcon imageIcon = new ImageIcon("pics/inky sprite.png"); // load the image to a imageIcon
                     Image image = imageIcon.getImage(); // transform it
                     Image newimg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newimg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
                     inky = new Ghost("inky", imageIcon);
                     inky.setDirection("u");
                     inky.setCurrLocation(new Coordinate(i,n));
-                    list.add(inky);
-                    map[i][n] = new Node(true, list, true);
+                    map[i][n] = new Node(true, inky, true);
                 }
                 else if (i==26 && n== 13){
                     this.pacManLocation = new Coordinate(i,n);
@@ -101,11 +91,9 @@ public class PacManGame {
                     Image image = imageIcon.getImage(); // transform it
                     Image newimg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newimg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
                     pacman = new Actor(imageIcon);
                     pacManDirection = "r";
-                    list.add(pacman);
-                    map[i][n] = new Node(true, list , false);
+                    map[i][n] = new Node(true, pacman , false);
                 }
                 else if (i<3 || i>33){
                     map[i][n] = new Node(false, null ,false);
@@ -115,17 +103,13 @@ public class PacManGame {
                     Image image = imageIcon.getImage(); // transform it
                     Image newimg = image.getScaledInstance(30, 45,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newimg);  // transform it back
-                    LinkedList<Actor> list = new LinkedList();
-                    list.add(new Dot(imageIcon));
-                    map[i][n] = new Node(true, list , true);
+                    map[i][n] = new Node(true, new Dot(imageIcon) , true);
                 }
             }
         }
         repaint();
-//        JPanel panel2 = new JPanel();
-//        JButton button = new JButton("Start");
-//        panel2.add(button);
-//        frame.add(panel2);
+
+
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -145,16 +129,16 @@ public class PacManGame {
                     pacManDirection = "d";
                     pacManLocation.setY(pacManLocation.getY()+1);
                 }
-                else if (keyName == 'd' && map[pacManLocation.getX()+1][pacManLocation.getY()].isInBounds()){
+
+                else if (keyName == 'd'){
                     pacManDirection = "r";
                     pacManLocation.setX(pacManLocation.getX()+1);
                 }
 
-                map[oldPacLocation.getX()][oldPacLocation.getY()].removeLast();
 
-                map[pacManLocation.getX()][pacManLocation.getY()].addOccupant(pacman);
+                map[oldPacLocation.getX()][oldPacLocation.getY()].setOccupant(null);
 
-
+                map[pacManLocation.getX()][pacManLocation.getY()].setOccupant(pacman);
 
 
 
@@ -169,8 +153,8 @@ public class PacManGame {
                      blinkyMove = blinky.forward(map);
                 }
 
-                map[oldBlinkyLoc.getX()][oldBlinkyLoc.getY()].removeLast();
-                map[blinkyMove.getX()][blinkyMove.getY()].addOccupant(blinky);
+                map[oldBlinkyLoc.getX()][oldBlinkyLoc.getY()].setOccupant(null);
+                map[blinkyMove.getX()][blinkyMove.getY()].setOccupant(blinky);
 
 
 
@@ -197,10 +181,8 @@ public class PacManGame {
                      pinkyMove = pinky.forward(map);
                 }
 
-                map[oldPinkyLoc.getX()][oldPinkyLoc.getY()].removeLast();
-                map[pinkyMove.getX()][pinkyMove.getY()].addOccupant(pinky);
-
-
+                map[oldPinkyLoc.getX()][oldPinkyLoc.getY()].setOccupant(null);
+                map[pinkyMove.getX()][pinkyMove.getY()].setOccupant(pinky);
 
 
                 repaint();
@@ -237,9 +219,9 @@ public class PacManGame {
             }
         }
         frame.add(grid);
+
         frame.repaint();
 
-        System.out.println("repainted!");
     }
 
 

@@ -6,14 +6,14 @@ public class Node {
 
     private int frictionCoef;
     private boolean isInBounds;
-    private LinkedList<Actor> occupants;
+    private Actor occupant;
 
     private boolean hasDot;
 
-    public Node (boolean isInBounds, LinkedList<Actor> occupants, boolean hasDot){
+    public Node (boolean isInBounds, Actor occupant, boolean hasDot){
         frictionCoef = 1;
         this.isInBounds = isInBounds;
-        this.occupants = occupants;
+        this.occupant = occupant;
         this.hasDot = hasDot;
     }
 
@@ -34,32 +34,25 @@ public class Node {
         isInBounds = inBounds;
     }
 
-    public LinkedList<Actor> getOccupants() {
-        return occupants;
+    public Actor getOccupant() {
+        return occupant;
     }
 
-    public void setOccupants(LinkedList<Actor> occupants) {
-        this.occupants = occupants;
+    public void setOccupant(Actor occupant) {
+        this.occupant = occupant;
     }
 
-    public Object getLast(){
-        return occupants.getLast();
-    }
 
-    public void removeLast(){
-        occupants.removeLast();
-    }
-
-    public void addOccupant (Actor object){
-        occupants.add(object);
-    }
 
     public ImageIcon getIcon() {
-        if (occupants!=null) return occupants.getLast().getIcon();
-        else return null;
+        if (occupant==null) return null;
+        return occupant.getIcon();
     }
 
 
+    public void setIcon(ImageIcon icon){
+        occupant.setIcon(icon);
+    }
 
     public boolean isHasDot() {
         return hasDot;

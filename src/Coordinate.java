@@ -3,12 +3,12 @@ public class Coordinate {
     private int y;
 
     public Coordinate (int x, int y){
-        this.x = x;
-        this.y = y;
+        this.x = y;
+        this.y = x;
     }
 
     public int getX() {
-        return x;
+        return y;
     }
 
     public void setX(int x) {
