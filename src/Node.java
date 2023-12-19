@@ -1,18 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class Node {
 
     private int frictionCoef;
     private boolean isInBounds;
-    private Object occupant;
-    private ImageIcon icon;
+    private LinkedList<Actor> occupants;
 
-    public Node (boolean isInBounds, Object occupant, ImageIcon icon){
+    private boolean hasDot;
+
+    public Node (boolean isInBounds, LinkedList<Actor> occupants, boolean hasDot){
         frictionCoef = 1;
         this.isInBounds = isInBounds;
-        this.occupant = occupant;
-        this.icon = icon;
+        this.occupants = occupants;
+        this.hasDot = hasDot;
     }
 
     public int getFrictionCoef() {
@@ -32,19 +34,38 @@ public class Node {
         isInBounds = inBounds;
     }
 
-    public Object getOccupant() {
-        return occupant;
+    public LinkedList<Actor> getOccupants() {
+        return occupants;
     }
 
-    public void setOccupant(Object occupant) {
-        this.occupant = occupant;
+    public void setOccupants(LinkedList<Actor> occupants) {
+        this.occupants = occupants;
+    }
+
+    public Object getLast(){
+        return occupants.getLast();
+    }
+
+    public void removeLast(){
+        occupants.removeLast();
+    }
+
+    public void addOccupant (Actor object){
+        occupants.add(object);
     }
 
     public ImageIcon getIcon() {
-        return icon;
+        if (occupants!=null) return occupants.getLast().getIcon();
+        else return null;
     }
 
-    public void setIcon(ImageIcon icon) {
-        this.icon = icon;
+
+
+    public boolean isHasDot() {
+        return hasDot;
+    }
+
+    public void setHasDot(boolean hasDot) {
+        this.hasDot = hasDot;
     }
 }
